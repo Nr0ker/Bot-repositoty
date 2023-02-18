@@ -3,7 +3,7 @@ import random
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, KeyboardButton
 
 bot = telebot.TeleBot('5988465298:AAG9vcEVtgYlDyiTloFDTc-6xLjR2245ri0')
-list_for_cartoons = ['1']
+list_for_cartoons = []
 
 
 def buttonses():
@@ -32,10 +32,12 @@ def startFunc(message):
     bot.send_message(message.chat.id, 'Що ви хочете зробити?', reply_markup=buttonses())
     print(message.text)
 
+def appending_lis(list:list, apendment):
+    list.append(apendment)
 
-def appending_list(apendment: str):
-    global list_for_cartoons
-    list_for_cartoons.append(apendment)
+# def appending_list(apendment):
+#     global list_for_cartoons
+#     list_for_cartoons.append(apendment)
 
 
 @bot.message_handler(content_types=['text'])
@@ -43,10 +45,10 @@ def get_user_info(message):
     b = '\n'
     if message.text == "Введіть мультик який хочете додати:":
         info = message.text
-        appending_list(info)
-    print(list_for_cartoons)
+        appending_lis(list_for_cartoons, info)
+        print(list_for_cartoons)
 
-    return b
+        return info
 
 
 @bot.callback_query_handler(func=lambda call: True)
