@@ -19,10 +19,10 @@ def startFunc(message):
 
 def appending_lis(list:list, apendment):
     list.append(apendment)
+    return list
 
 @bot.message_handler(content_types=['text'])
 def get_user_info(message):
-    b = '\n'
     if message.text == "Введіть мультик який хочете додати:":
         info = message.text
         appending_lis(list_for_cartoons, info)
