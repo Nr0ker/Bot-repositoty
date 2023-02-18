@@ -35,9 +35,8 @@ def get_user_info(message):
 def callback_query(call):
     if call.data == 'додавання':
         bot.send_message(call.from_user.id, 'Введіть мультик який хочете додати:')
-        # print(call.message)
         print(list_for_cartoons)
     if call.data == 'показати список':
-        bot.send_message(call.from_user.id, list_for_cartoons)
+        bot.send_message(call.from_user.id, f'Ось весь список мультиків {list_for_cartoons}')
 
 bot.polling(none_stop=True)
