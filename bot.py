@@ -20,7 +20,6 @@ def startFunc(message):
 def appending_lis(apendment):
     global list_for_cartoons
     list_for_cartoons.append(apendment)
-    return list_for_cartoons
 
 @bot.message_handler(content_types=['text'])
 def get_user_info(message):
