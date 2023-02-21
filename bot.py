@@ -1,3 +1,5 @@
+from copy import copy
+
 import telebot
 import random
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, KeyboardButton
@@ -12,32 +14,35 @@ def buttonses():
     markupqq.add(button1, button2)
     return markupqq
 
+# def appending_lis(apendment):
+#     global list_for_cartoons
+#     list_for_cartoons.append(apendment)
+#     print(list_for_cartoons)
 @bot.message_handler(commands=['start'])
 def startFunc(message):
     bot.send_message(message.chat.id, 'Що ви хочете зробити?', reply_markup=buttonses())
     print(message.text)
 
-def appending_lis(list:list, apendment):
-    list.append(apendment)
-
 @bot.message_handler(content_types=['text'])
 def get_user_info(message):
+    global list_for_cartoons
     b = '\n'
-    if message.text == "Введіть мультик який хочете додати:":
+    if message.text:
         info = message.text
-        appending_lis(list_for_cartoons, info)
-        print(list_for_cartoons)
-        print(info)
+        list_for_cartoons.append(info)
+        print("Це список мультів", list_for_cartoons)
+        print("Мульт, який зараз ввели", info)
 
-        return info
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
     if call.data == 'додавання':
-        bot.send_message(call.from_user.id, 'Введіть мультик який хочете додати:')
-        # print(call.message)
-        print(list_for_cartoons)
+        msg = bot.send_message(call.from_user.id, 'Введіть мультик який хочете додати:')
+        bot.register_next_step_handler(msg, get_user_info)
+        # print(list_for_cartoons)
     if call.data == 'показати список':
-        bot.send_message(call.from_user.id, list_for_cartoons)
+        bot.send_message(call.from_user.id, str(list_for_cartoons)+"3")
+
+
 
 bot.polling(none_stop=True)
